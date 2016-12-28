@@ -7,7 +7,7 @@ PGID=${PGID:-911}
 PUSER=${PUSER:-abc}
 
 
-addgroup --gid $PGID $PUSER
+#addgroup --gid $PGID $PUSER
 adduser --uid=$PUID --gid=$PGID --gecos "user $PUID" --disabled-password $PUSER 
 
 
@@ -31,14 +31,14 @@ User uid:    $(id -u $PUSER)
 User gid:    $(id -g $PUSER)
 -------------------------------------
 "
-chown $PUSER:$PUSER /app
-chown $PUSER:$PUSER /config
-chown $PUSER:$PUSER /defaults
-chown $PUSER:$PUSER /backup
+chown $PUSER:users /app
+chown $PUSER:users /config
+chown $PUSER:users /defaults
+chown $PUSER:users /backup
 # configure ssh access
 mkdir /home/ec/.ssh
 chmod 700 /home/ec/.ssh
 cp /config/user/authorized_keys /home/ec/.ssh
 chmod 644 /home/ec/.ssh/authorized_keys
-chown -R $PUSER:$PUSER /home/ec/.ssh
+chown -R $PUSER:users /home/ec/.ssh
 exit 0
