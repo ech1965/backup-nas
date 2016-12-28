@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cp /config/ssh/* /etc/ssh
+chown root:root /etc/ssh/*
+chmod 600 /etc/ssh/*key
+chmod 644 /etc/ssh/*pub /etc/ssh/moduli /etc/ssh/*config
+
+exit 0
