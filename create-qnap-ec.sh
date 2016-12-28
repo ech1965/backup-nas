@@ -8,6 +8,8 @@ NAME=BACKUP-EC
 BACKUP_HOME=/share/Backups/$USER_NAME
 # Folder for configuration files
 CONFIG_HOME=$BACKUP_HOME/Configuration/config
+# Folder for backup jobs
+JOBS_HOME=/share/homes/ec/.Qsync/BACKUP_JOBS
 # Folder for rdiffweb persistent data ( config file & sqlite database)
 RDIFFWEB_HOME=$BACKUP_HOME/Configuration/rdiffweb
 # Root folder for rdiff-backup repositories
@@ -24,6 +26,7 @@ docker create \
   -v $REPOSITORIES_ROOT:/repositories \
   -v $CONFIG_HOME:/config \
   -v $HOME_FOLDER:/sourcedata:ro  \
+  -v $JOBS_HOME:/jobs:ro  \
   -v $RESTORE_POINT:/restore \
   -v $RDIFFWEB_HOME:/etc/rdiffweb \
   -p $SSH_PORT:22 \
