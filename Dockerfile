@@ -49,7 +49,7 @@ EXPOSE 22 8080
 # expect a directory named $PUSER
 # /restore : where to restore files
 # /data    : source directory for local backup (ro)
-VOLUME /repositories /config /sourcedata /restore /etc/rdiffweb /jobs
+VOLUME /repositories /config /sourcedata /restore /etc/rdiffweb /jobs /reports
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
