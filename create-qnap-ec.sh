@@ -21,10 +21,13 @@ HOME_FOLDER=/share/homes/$USER_NAME
 SSH_PORT=50086
 WEB_PORT=50087
 
-docker kill $NAME
-docker rm  $NAME
+#docker kill $NAME
+#docker rm  $NAME
+docker pull ech1965/backup-nas:latest
+
 docker create \
   --name=$NAME \
+  -v /etc/localtime:/etc/localtime \
   -v $REPOSITORIES_ROOT:/repositories \
   -v $CONFIG_HOME:/config \
   -v $REPORTS_HOME:/reports \
@@ -36,4 +39,7 @@ docker create \
   -p $WEB_PORT:8080 \
   -e PGID=$GROUP_ID -e PUID=$USER_ID -e PUSER=$USER_NAME  \
   ech1965/backup-nas:latest
+
 docker start $NAME
+
+
