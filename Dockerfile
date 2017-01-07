@@ -10,7 +10,7 @@ RUN apt-get update -y && \
        rsync \
        rdiff-backup \
        python-cherrypy3 python python-pysqlite2 libsqlite3-dev python-jinja2 python-setuptools python-babel \
-       wget
+       wget zip unzip
 #
 # Activate SSH
 RUN rm -f /etc/service/sshd/down
@@ -28,15 +28,20 @@ RUN cd /root && \
     cd rdiffweb-* && \
     python setup.py install
 
-#ADD 00-install-rdiffweb /00-install-rdiffweb
-#RUN chmod +x /00-install-rdiffweb && /00-install-rdiffweb
-
 # Install service script for rdiffweb
 RUN mkdir -p /etc/service/rdiffweb
 ADD service/rdiffweb/run /etc/service/rdiffweb/run
 RUN chmod +x /etc/service/rdiffweb/run
 
 EXPOSE 22 8080
+
+# Install rclone
+RUN cd /root && \
+    wget --no-check-certificate -O rclone.zip http://downloads.rclone.org/rclone-current-linux-amd64.zip && \
+    unzip rclone.zip && \
+    cd rclone-* && \
+    cp rclone /usr/bin
+
 
 ################### 
 # Volumes expected to be mapped

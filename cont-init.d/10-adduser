@@ -31,10 +31,7 @@ User uid:    $(id -u $PUSER)
 User gid:    $(id -g $PUSER)
 -------------------------------------
 "
-chown $PUSER:users /app
 chown $PUSER:users /config
-chown $PUSER:users /defaults
-chown $PUSER:users /backup
 # configure ssh access
 mkdir /home/ec/.ssh
 chmod 700 /home/ec/.ssh
