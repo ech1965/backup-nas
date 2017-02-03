@@ -38,4 +38,9 @@ chmod 700 /home/ec/.ssh
 cp /config/user/authorized_keys /home/ec/.ssh
 chmod 644 /home/ec/.ssh/authorized_keys
 chown -R $PUSER:users /home/ec/.ssh
+install  --group=crontab \
+         --mode=600      \
+         --owner=$PUSER  \
+         /config/user/crontab /var/spool/cron/crontabs/$PUSER
+
 exit 0

@@ -9,9 +9,9 @@ BACKUP_HOME=/share/Backups/$USER_NAME
 # Folder for configuration files
 CONFIG_HOME=$BACKUP_HOME/Configuration/config
 # Folder for backup jobs
-JOBS_HOME=/share/homes/ec/.Qsync/BACKUP_JOBS/jobs
+JOBS_HOME=$BACKUP_HOME/Configuration/jobs
 # Reports generated from cron
-REPORTS_HOME=/share/homes/ec/.Qsync/BACKUP_JOBS/reports
+REPORTS_HOME=/share/Web/backup-ec/reports/
 # Folder for rdiffweb persistent data ( config file & sqlite database)
 RDIFFWEB_HOME=$BACKUP_HOME/Configuration/rdiffweb
 # Root folder for rdiff-backup repositories
@@ -21,8 +21,8 @@ HOME_FOLDER=/share/homes/$USER_NAME
 SSH_PORT=50086
 WEB_PORT=50087
 
-#docker kill $NAME
-#docker rm  $NAME
+docker kill $NAME
+docker rm  $NAME
 docker pull ech1965/backup-nas:latest
 
 docker create \
@@ -41,5 +41,7 @@ docker create \
   ech1965/backup-nas:latest
 
 docker start $NAME
+
+
 
 
