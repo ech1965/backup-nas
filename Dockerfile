@@ -35,7 +35,7 @@ RUN chmod +x /etc/service/rdiffweb/run
 
 EXPOSE 22 8080
 
-# Install rclone
+# Install rclone 1.36
 RUN cd /root && \
     wget --no-check-certificate -O rclone.zip http://downloads.rclone.org/rclone-current-linux-amd64.zip && \
     unzip rclone.zip && \
