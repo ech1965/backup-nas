@@ -33,6 +33,14 @@ RUN mkdir -p /etc/service/rdiffweb
 ADD service/rdiffweb/run /etc/service/rdiffweb/run
 RUN chmod +x /etc/service/rdiffweb/run
 
+
+# Install duplicacy 2.0.0
+RUN cd /root && \
+    wget --no-check-certificate -O duplicacy https://github.com/gilbertchen/duplicacy-cli/releases/download/v2.0.0/duplicacy_linux_x64_2.0.0 && \
+    chmod a+x duplicacy && \
+    cp duplicacy /usr/bin
+
+
 EXPOSE 22 8080
 
 # Install rclone 1.36

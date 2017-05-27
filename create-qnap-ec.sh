@@ -31,7 +31,7 @@ docker create \
   -v $REPOSITORIES_ROOT:/repositories \
   -v $CONFIG_HOME:/config \
   -v $REPORTS_HOME:/reports \
-  -v $HOME_FOLDER:/sourcedata:ro  \
+  -v $HOME_FOLDER:/sourcedata  \
   -v $JOBS_HOME:/jobs:ro  \
   -v $RESTORE_POINT:/restore \
   -v $RDIFFWEB_HOME:/etc/rdiffweb \
