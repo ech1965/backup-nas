@@ -10,7 +10,12 @@ RUN apt-get update -y && \
        rsync \
        rdiff-backup \
        python-cherrypy3 python python-pysqlite2 libsqlite3-dev python-jinja2 python-setuptools python-babel \
+       python-dev  \
+       build-essential libssl-dev libffi-dev \
+       libxml2-dev libxslt1-dev zlib1g-dev \
+       python-pip \
        wget zip unzip
+
 #
 # Activate SSH
 RUN rm -f /etc/service/sshd/down
@@ -20,6 +25,20 @@ RUN mkdir -p /etc/my_init.d
 ADD cont-init.d/10-adduser       /etc/my_init.d/10-adduser
 ADD cont-init.d/20-configure-ssh /etc/my_init.d/20-configure-ssh
 RUN chmod +x /etc/my_init.d/10-adduser /etc/my_init.d/20-configure-ssh
+
+# Install rclone 1.36
+RUN cd /root && \
+    wget --no-check-certificate -O rclone.zip http://downloads.rclone.org/rclone-current-linux-amd64.zip && \
+    unzip rclone.zip && \
+    cd rclone-* && \
+    cp rclone /usr/bin
+
+
+# Install duplicacy 2.0.0
+RUN cd /root && \
+    wget --no-check-certificate -O duplicacy https://github.com/gilbertchen/duplicacy-cli/releases/download/v2.0.0/duplicacy_linux_x64_2.0.0 && \
+    chmod a+x duplicacy && \
+    cp duplicacy /usr/bin
 
 # Install rdiff-viewer
 RUN cd /root && \
@@ -34,22 +53,7 @@ ADD service/rdiffweb/run /etc/service/rdiffweb/run
 RUN chmod +x /etc/service/rdiffweb/run
 
 
-# Install duplicacy 2.0.0
-RUN cd /root && \
-    wget --no-check-certificate -O duplicacy https://github.com/gilbertchen/duplicacy-cli/releases/download/v2.0.0/duplicacy_linux_x64_2.0.0 && \
-    chmod a+x duplicacy && \
-    cp duplicacy /usr/bin
-
-
 EXPOSE 22 8080
-
-# Install rclone 1.36
-RUN cd /root && \
-    wget --no-check-certificate -O rclone.zip http://downloads.rclone.org/rclone-current-linux-amd64.zip && \
-    unzip rclone.zip && \
-    cd rclone-* && \
-    cp rclone /usr/bin
-
 
 ################### 
 # Volumes expected to be mapped
