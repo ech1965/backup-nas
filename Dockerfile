@@ -22,38 +22,18 @@ RUN rm -f /etc/service/sshd/down
 
 # Install startup scripts
 RUN mkdir -p /etc/my_init.d
-ADD cont-init.d/10-adduser       /etc/my_init.d/10-adduser
-ADD cont-init.d/20-configure-ssh /etc/my_init.d/20-configure-ssh
-RUN chmod +x /etc/my_init.d/10-adduser /etc/my_init.d/20-configure-ssh
-
-# Install rclone 1.36
-RUN cd /root && \
-    wget --no-check-certificate -O rclone.zip http://downloads.rclone.org/rclone-current-linux-amd64.zip && \
-    unzip rclone.zip && \
-    cd rclone-* && \
-    cp rclone /usr/bin
-
+ADD cont-init.d/10-adduser                /etc/my_init.d/10-adduser
+ADD cont-init.d/20-configure-ssh          /etc/my_init.d/20-configure-ssh
+RUN chmod +x /etc/my_init.d/10-adduser    /etc/my_init.d/20-configure-ssh
 
 # Install duplicacy 2.0.0
-RUN cd /root && \
-    wget --no-check-certificate -O duplicacy https://github.com/gilbertchen/duplicacy-cli/releases/download/v2.0.0/duplicacy_linux_x64_2.0.0 && \
-    chmod a+x duplicacy && \
-    cp duplicacy /usr/bin
+# pour le moment on s'en passe puisqu'on travaille avec mon fork
+#RUN cd /root && \
+#    wget --no-check-certificate -O duplicacy https://github.com/gilbertchen/duplicacy-cli/releases/download/v2.0.0/duplicacy_linux_x64_2.0.0 && \
+#    chmod a+x duplicacy && \
+#    cp duplicacy /usr/bin
 
-# Install rdiff-viewer
-RUN cd /root && \
-    wget --no-check-certificate -O rdiffweb.tar.gz https://github.com/ikus060/rdiffweb/archive/master.tar.gz && \
-    tar zxf rdiffweb.tar.gz && \
-    cd rdiffweb-* && \
-    python setup.py install
-
-# Install service script for rdiffweb
-RUN mkdir -p /etc/service/rdiffweb
-ADD service/rdiffweb/run /etc/service/rdiffweb/run
-RUN chmod +x /etc/service/rdiffweb/run
-
-
-EXPOSE 22 8080
+EXPOSE 22
 
 ################### 
 # Volumes expected to be mapped
@@ -62,11 +42,12 @@ EXPOSE 22 8080
 # /config/ssh ( host and user key )
 # /config/authorized_keys
 # /config/crontab
-# /backup : destination backup dir
-# expect a directory named $PUSER
 # /restore : where to restore files
-# /data    : source directory for local backup (ro)
-VOLUME /repositories /config /sourcedata /restore /etc/rdiffweb /jobs /reports
+# /datahome    : source directory for local backup (ro)
+# /dataperso   : Source directory for local backup (ro)
+# /jobs        : Directory containing script and crontab
+# /reports     : Directory for storing report files
+VOLUME /config /datahome /dataperso /restore /jobs /reports
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
