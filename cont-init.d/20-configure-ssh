@@ -8,4 +8,5 @@ chmod 644 /etc/ssh/*pub /etc/ssh/moduli /etc/ssh/*config
 echo "export LANG='en_US.UTF-8'"    > /etc/profile.d/01locale 
 echo "export LANGUAGE='en_US:en'"  >> /etc/profile.d/01locale 
 echo "export LC_ALL='en_US.UTF-8'" >> /etc/profile.d/01locale
+chmod a+x /etc/profile.d/01locale
 exit 0
