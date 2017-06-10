@@ -49,6 +49,9 @@ EXPOSE 22
 # /reports     : Directory for storing report files
 VOLUME /config /datahome /dataperso /restore /jobs /reports
 
+RUN locale-gen en_US.UTF-8
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
