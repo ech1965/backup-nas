@@ -14,9 +14,22 @@ RUN apt-get update -y && \
        build-essential libssl-dev libffi-dev \
        libxml2-dev libxslt1-dev zlib1g-dev \
        python-pip \
-       wget zip unzip
+       wget zip unzip vim
 
 #
+RUN locale-gen en_US.UTF-8
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Install duplicacy 2.0.0
+# pour le moment on s'en passe puisqu'on travaille avec mon fork
+#RUN cd /root && \
+#    wget --no-check-certificate -O duplicacy https://github.com/gilbertchen/duplicacy-cli/releases/download/v2.0.0/duplicacy_linux_x64_2.0.0 && \
+#    chmod a+x duplicacy && \
+#    cp duplicacy /usr/bin
+
 # Activate SSH
 RUN rm -f /etc/service/sshd/down
 
@@ -25,13 +38,6 @@ RUN mkdir -p /etc/my_init.d
 ADD cont-init.d/10-adduser                /etc/my_init.d/10-adduser
 ADD cont-init.d/20-configure-ssh          /etc/my_init.d/20-configure-ssh
 RUN chmod +x /etc/my_init.d/10-adduser    /etc/my_init.d/20-configure-ssh
-
-# Install duplicacy 2.0.0
-# pour le moment on s'en passe puisqu'on travaille avec mon fork
-#RUN cd /root && \
-#    wget --no-check-certificate -O duplicacy https://github.com/gilbertchen/duplicacy-cli/releases/download/v2.0.0/duplicacy_linux_x64_2.0.0 && \
-#    chmod a+x duplicacy && \
-#    cp duplicacy /usr/bin
 
 EXPOSE 22
 
@@ -49,9 +55,5 @@ EXPOSE 22
 # /reports     : Directory for storing report files
 VOLUME /config /datahome /dataperso /restore /jobs /reports
 
-RUN locale-gen en_US.UTF-8
-ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
