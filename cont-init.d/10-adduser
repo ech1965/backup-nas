@@ -5,6 +5,7 @@ set -x
 PUID=${PUID:-911}
 PGID=${PGID:-911}
 PUSER=${PUSER:-abc}
+JOB_REPO_URL=${JOB_REPO_URL:"https://github.com/ech1965/lorath-jobs.git"}
 
 
 #addgroup --gid $PGID $PUSER
@@ -38,9 +39,20 @@ chmod 700 /home/$PUSER/.ssh
 cp /config/user/authorized_keys /home/$PUSER/.ssh
 chmod 644 /home/$PUSER/.ssh/authorized_keys
 chown -R $PUSER:users /home/$PUSER/.ssh
+
+# JOB repo is always cloned int $HOME/jobs
+# Make sure repo is empty
+rm -rf /home/$PUSER/jobs
+
+# git clone
+git clone $JOB_REPO_URL /home/$PUSER/jobs
+
+# Install crontab
 install  --group=crontab \
          --mode=600      \
          --owner=$PUSER  \
-         /jobs/crontab /var/spool/cron/crontabs/$PUSER
+         /home/$PUSER/jobs/crontab /var/spool/cron/crontabs/$PUSER
+
+
 
 exit 0

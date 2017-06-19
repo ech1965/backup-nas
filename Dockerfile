@@ -14,7 +14,7 @@ RUN apt-get update -y && \
        build-essential libssl-dev libffi-dev \
        libxml2-dev libxslt1-dev zlib1g-dev \
        python-pip \
-       wget zip unzip vim
+       wget zip unzip vim git
 
 #
 RUN locale-gen en_US.UTF-8
@@ -51,9 +51,10 @@ EXPOSE 22
 # /restore : where to restore files
 # /datahome    : source directory for local backup (ro)
 # /dataperso   : Source directory for local backup (ro)
-# /jobs        : Directory containing script and crontab
+# /pref-dirs   : Directory for  pref-dir option from Duplicacy
 # /reports     : Directory for storing report files
-VOLUME /config /datahome /dataperso /restore /jobs /reports
+# /restore     : Where restore commands should restore files
+VOLUME /config /datahome /dataperso /pref-dirs /restore /reports
 
 
 
