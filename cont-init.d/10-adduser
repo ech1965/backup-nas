@@ -46,6 +46,7 @@ rm -rf /home/$PUSER/jobs
 
 # git clone
 git clone $JOB_REPO_URL /home/$PUSER/jobs
+chown -R $PUSER /home/$PUSER/jobs
 
 # Install crontab
 install  --group=crontab \

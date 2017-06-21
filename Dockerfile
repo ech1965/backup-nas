@@ -25,10 +25,10 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install duplicacy 2.0.0
 # pour le moment on s'en passe puisqu'on travaille avec mon fork
-#RUN cd /root && \
-#    wget --no-check-certificate -O duplicacy https://github.com/gilbertchen/duplicacy-cli/releases/download/v2.0.0/duplicacy_linux_x64_2.0.0 && \
-#    chmod a+x duplicacy && \
-#    cp duplicacy /usr/bin
+RUN cd /root && \
+    wget --no-check-certificate -O duplicacy https://github.com/gilbertchen/duplicacy/releases/download/v2.0.3/duplicacy_linux_x64_2.0.3 && \
+    chmod a+x duplicacy && \
+    cp duplicacy /usr/bin
 
 # Activate SSH
 RUN rm -f /etc/service/sshd/down
