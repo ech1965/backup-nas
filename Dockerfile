@@ -47,6 +47,7 @@ EXPOSE 22
 # expected to contain
 # /config/ssh ( host and user key )
 # /config/authorized_keys
+# /config/tokens ( token files )
 # /config/crontab
 # /restore : where to restore files
 # /datahome    : source directory for local backup (ro)

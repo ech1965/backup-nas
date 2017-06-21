@@ -49,10 +49,8 @@ git clone $JOB_REPO_URL /home/$PUSER/jobs
 chown -R $PUSER /home/$PUSER/jobs
 
 # Install crontab
-install  --group=crontab \
-         --mode=600      \
-         --owner=$PUSER  \
-         /home/$PUSER/jobs/crontab /var/spool/cron/crontabs/$PUSER
+
+su -c  "crontab /home/$PUSER/jobs/crontab" $PUSER
 
 
 
