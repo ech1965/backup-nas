@@ -1,5 +1,6 @@
 FROM phusion/baseimage:0.9.19
 
+ARG DUPLICACY_VERSION=2.0.6
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
 
@@ -7,15 +8,13 @@ CMD ["/sbin/my_init"]
 RUN apt-get update -y && \ 
     apt-get dist-upgrade -y --no-install-recommends && \
     apt-get install -y --no-install-recommends \
-       rsync \
-       rdiff-backup \
-       python-cherrypy3 python python-pysqlite2 libsqlite3-dev python-jinja2 python-setuptools python-babel \
-       python-dev  \
-       build-essential libssl-dev libffi-dev \
-       libxml2-dev libxslt1-dev zlib1g-dev \
-       python-pip \
-       wget zip unzip vim git
+       rsync rdiff-backup wget zip unzip vim git
 
+       #build-essential libssl-dev libffi-dev
+       #libxml2-dev libxslt1-dev zlib1g-dev
+       #python-cherrypy3 python python-pysqlite2 libsqlite3-dev python-jinja2 python-setuptools python-babel
+       #python-dev 
+       #python-pip
 #
 RUN locale-gen en_US.UTF-8
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
@@ -23,10 +22,9 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install duplicacy 2.0.0
-# pour le moment on s'en passe puisqu'on travaille avec mon fork
+# Install duplicacy 2.0.6
 RUN cd /root && \
-    wget --no-check-certificate -O duplicacy https://github.com/gilbertchen/duplicacy/releases/download/v2.0.3/duplicacy_linux_x64_2.0.3 && \
+    wget --no-check-certificate -O duplicacy https://github.com/gilbertchen/duplicacy/releases/download/v$DUPLICACY_VERSION/duplicacy_linux_x64_$DUPLICACY_VERSION && \
     chmod a+x duplicacy && \
     cp duplicacy /usr/bin
 
