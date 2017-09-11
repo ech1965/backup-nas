@@ -1,6 +1,6 @@
 FROM phusion/baseimage:0.9.19
 
-ARG DUPLICACY_VERSION=2.0.6
+ARG DUPLICACY_VERSION=2.0.9
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
 

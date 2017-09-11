@@ -24,11 +24,12 @@ docker pull ech1965/backup-nas:latest
 # /jobs
 # /datahomme et /dataperso (une fois que les repos duplicacy sont créés)
 docker create \
+  --restart=unless-stopped \
   --name=$NAME \
-  -v /etc/localtime:/etc/localtime \
+  -v /etc/localtime:/etc/localtime:ro \
   -v $CONFIG:/config \
-  -v $DATA_HOME:/datahome  \
-  -v $DATA_PERSO:/dataperso  \
+  -v $DATA_HOME:/datahome:ro  \
+  -v $DATA_PERSO:/dataperso:ro  \
   -v $PREF_DIRS:/pref-dirs  \
   -v $REPORTS:/reports \
   -v $RESTORE:/restore \
